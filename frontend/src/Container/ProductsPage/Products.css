@@ -1,0 +1,21 @@
+.container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-around;
+    margin-top: 1rem;
+    /* margin-right: -1rem; */
+}
+
+.card{
+    width: 12rem;
+    padding: 1rem .2rem;
+    border-radius: 1rem;
+    background-color: rgba(250, 174, 123,0.2) !important;
+}
+.card >img{
+    width: auto;
+    height: 6rem;
+}
