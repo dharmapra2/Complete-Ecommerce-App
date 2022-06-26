@@ -1,11 +1,18 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
-import {http} from "../../APi/commonApi";
+import React, { useState, useEffect } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { http } from "../../APi/commonApi";
+import swal from "sweetalert";
 function Signup() {
-  // let temp = "";
-  // const msgRef = useRef();
-  // msgRef.current.type='hide';
-  const [msg, SetMsg] = useState("");
+  const navigate = useNavigate();
+  useEffect(() => {
+    let token = localStorage.getItem("Token");
+    // console.log(token);
+    if (token !== null) {
+      console.log("kdfgje")
+      navigate("/home");
+    }
+  }, [navigate]);
+  const [errorMsg, SetErrorMsg] = useState([]);
   function FormData(e) {
     e.preventDefault();
     let data = Array.from(e.target)
@@ -17,10 +24,24 @@ function Signup() {
         }),
         {}
       );
-    http.post("/register", data).then((res) => SetMsg(res.data));
+    http
+      .post("/register", data)
+      .then((res) => {
+        // console.log(res);
+        if (res.status === 200) {
+          swal("Sucess", res.data.sucess, "success");
+          errorMsg([]);
+        } else if (res.status === 201) {
+          swal("Warning", res.data.warning, "warning");
+        }
+      })
+      .catch((error) => {
+        SetErrorMsg(error.response.data.errors);
+        // console.log(error.response);
+        swal("Errors", error.response.data.message, "error");
+      });
     setTimeout(() => {
-      document.getElementById('form').reset();
-      SetMsg('');
+      document.getElementById("form").reset();
     }, 1000);
   }
   // setTimeout(() => {
@@ -35,13 +56,6 @@ function Signup() {
             Create An Account
           </h5>
         </div>
-        <input
-            type={(msg)?'text':'hidden'}
-            className="alert alert-primary m-1 p-1"
-            role="alert"
-            value={msg}
-            readOnly
-          />
         <div className="modal-body">
           <form name="form" id="form" onSubmit={(event) => FormData(event)}>
             <div className="mb-3">
@@ -51,9 +65,8 @@ function Signup() {
                 className="form-control form-control-sm"
                 placeholder="username"
                 // pattern="[A-Za-z0-9]{2,}\s*"
-                minLength={6}
-                required
               />
+              <span className="text-danger small">{errorMsg.name}</span>
             </div>
             <div className="mb-3">
               <input
@@ -62,9 +75,8 @@ function Signup() {
                 className="form-control form-control-sm"
                 placeholder="enter password"
                 // pattern="[A-Za-z0-9]{2,}\s*"
-                minLength={6}
-                required
               />
+              <span className="text-danger small">{errorMsg.password}</span>
             </div>
             <div className="mb-3">
               <button

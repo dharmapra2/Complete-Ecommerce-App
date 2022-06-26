@@ -1,9 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import "./Login.css";
-import {http} from "../../APi/commonApi";
-import { NavLink } from "react-router-dom";
+import { http } from "../../APi/commonApi";
+import { NavLink, useNavigate } from "react-router-dom";
+import swal from "sweetalert";
 function Login() {
-  const [msg, SetMsg] = useState("");
+  const navigate = useNavigate();
+  useEffect(() => {
+    let token = localStorage.getItem("Token");
+    // console.log(token);
+    if (token !== null) {
+      navigate("/home");
+    }
+  }, [navigate]);
   function FormData(e) {
     e.preventDefault();
     let data = Array.from(e.target)
@@ -20,7 +28,8 @@ function Login() {
       .post("/login", data)
       .then((res) => {
         if (res.status === 200) {
-          SetMsg("Login Sucessfully...");
+          swal("", "Login Sucessfully...", "success");
+          // swal('Sucess',"Login Sucessfully...");
           localStorage.setItem("Token", JSON.stringify(res.data.token));
           setTimeout(() => {
             window.location.replace("/home");
@@ -28,12 +37,11 @@ function Login() {
         }
       })
       .catch((err) => {
-        console.log(err);
-        SetMsg("invalid username & password...");
-        localStorage.setItem("Token", null);
+        // console.log(err);
+        swal("Unauhorized", "Invalid username & password...", "error");
+        localStorage.removeItem("Token");
       });
     setTimeout(() => {
-      SetMsg("");
       document.getElementById("form").reset();
     }, 2000);
   }
@@ -43,7 +51,7 @@ function Login() {
         <div className="modal-header">
           <h5 className="modal-title text-center">LogIn</h5>
         </div>
-        <input
+        {/* <input
           type={msg ? "text" : "hidden"}
           className={
             msg.startsWith("Login")
@@ -53,7 +61,7 @@ function Login() {
           role="alert"
           value={msg}
           readOnly
-        />
+        /> */}
         <div className="modal-body">
           <form name="form" id="form" onSubmit={(event) => FormData(event)}>
             <div className="mb-3">

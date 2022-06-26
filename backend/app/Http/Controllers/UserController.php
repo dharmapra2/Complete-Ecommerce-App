@@ -57,8 +57,8 @@ class UserController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'name'=>'required',
-            'password'=>'required',
+            'name'=>'required|min:6|string',
+            'password'=>'required|min:8',
         ]);
         //searching user for unique
         $search=User::where('name',$request->name)->get();
@@ -67,11 +67,11 @@ class UserController extends Controller
                 'name'=>$request['name'],
                 'password'=>$request['password'],
             ]);
-            return response()->json('Registrtion Sucessfull..');
+            return response()->json(['sucess'=>'Registrtion Sucessfull..'],200);
         } else {
-            return response()->json('Username is Already Present...');
+            return response()->json(['warning'=>'Username is Already Present...'],201);
         }
-        return response()->json(compact('request'));
+        return response()->json('request');
     }
     /**
      * Display the specified resource.

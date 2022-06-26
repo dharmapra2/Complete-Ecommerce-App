@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Navbar from "../Header/Navbar";
-import {auth} from "../../APi/commonApi";
+import { auth } from "../../APi/commonApi";
 function AddProduct() {
   const [msg, SetMsg] = useState("");
   const {
@@ -20,7 +20,7 @@ function AddProduct() {
     };
     // console.log(data);
     // const token = JSON.parse(localStorage.getItem("Token"));
-    // console.log(errors);
+    console.log(errors);
     auth
       .post("/storeProduct", data)
       .then((res) => {
