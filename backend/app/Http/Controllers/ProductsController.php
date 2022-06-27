@@ -64,14 +64,15 @@ class ProductsController extends Controller
      * @param  \App\Models\Products  $products
      * @return \Illuminate\Http\Response
      */
-    public function prodDetails($id)
+     function prodDetails($id)
     {
-        $data = Products::all();
-        if ($data) {
-            return response()->json($data);
-        } else {
-            return response()->json(['status' => 400, 'message' => 'No Product is avilable.']);
-        }
+        // $data = Products::all();
+        // if ($data) {
+        //     return response()->json($data);
+        // } else {
+        //     return response()->json(['status' => 400, 'message' => 'No Product is avilable.']);
+        // }
+        return $id;
     }
 
     /**
