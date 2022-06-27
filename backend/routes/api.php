@@ -19,9 +19,10 @@ Route::post('login', [UserController::class,'login']);
 Route::post('register', [UserController::class,'register']);
 Route::post('storeProduct', [ProductsController::class,'storeProduct']);
 Route::get('getProducts', [ProductsController::class,'index']);
+Route::an('prodDetails/{id}', [ProductsController::class,'prodDetails']);
 Route::middleware('auth:api')->group(function () {
     Route::get('show', [UserController::class,'show']);
-    Route::get('products', [ProductsController::class,'index']);
+    // Route::get('products', [ProductsController::class,'index']);
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

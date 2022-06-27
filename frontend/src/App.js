@@ -7,6 +7,7 @@ import Login from "./Container/Sign/Login";
 import Signup from "./Container/Registration/Signup";
 import Home from "./Container/Home Page/Home";
 import AddProduct from "./Container/ProductsPage/AddProduct";
+import ProdDetails from "./Container/ProductsPage/ProdDetails";
 function App() {
   return (
     <>
@@ -16,6 +17,7 @@ function App() {
         <Route path="/Signup" element={<Signup />} />
         <Route path="/home" element={<Home />} />
         <Route path="/addProduct" element={<AddProduct />} />
+        <Route path="/ProdDetails/:id" element={<ProdDetails />} />
       </Routes>
     </>
   );
