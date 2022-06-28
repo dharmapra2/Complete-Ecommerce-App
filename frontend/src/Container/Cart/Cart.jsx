@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 function Cart() {
   const navigate = useNavigate();
   const [cartList, SetCartList] = useState([]);
+  const localData = JSON.parse(localStorage.getItem("Data"));
   useEffect(() => {
-    const localData = JSON.parse(localStorage.getItem("Data"));
     const test = {
       uid: localData.uid,
     };
@@ -16,11 +16,17 @@ function Cart() {
       });
     };
     data();
-  }, []);
+  }, [localData]);
   let html = "";
   let total_price = 0;
+  let pname = [];
   const handleCheckout = () => {
-    localStorage.setItem('price',total_price);
+    const temp = {
+      price: total_price,
+      pname: pname,
+      uid: localData.uid,
+    };
+    localStorage.setItem('temp',JSON.stringify(temp));
     navigate("/checkout");
   };
   if (cartList.length > 0) {
@@ -45,6 +51,7 @@ function Cart() {
           </thead>
           <tbody>
             {cartList.map((item, i) => {
+              pname.push(item.pname);
               total_price += item.price;
               return (
                 <tr key={i} className="text-center">
@@ -82,7 +89,7 @@ function Cart() {
   } else {
     html = (
       <div className="mt-2 p-2 bd-highlight text-center">
-        <p scope="row">Your Cart is empty...</p>
+        <p>Your Cart is empty...</p>
       </div>
     );
   }

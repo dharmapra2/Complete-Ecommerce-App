@@ -66,7 +66,7 @@ class ProductsController extends Controller
     //  */
     public function prodDetails($id)
     {
-        $data = Products::where('pid',$id)->first();
+        $data = Products::where('pid', $id)->first();
         if ($data) {
             return response()->json($data);
         } else {

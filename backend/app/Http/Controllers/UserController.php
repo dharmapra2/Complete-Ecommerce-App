@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
+
 class UserController extends Controller
 {
     /**
@@ -15,26 +16,26 @@ class UserController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'name'=>'required',
-            'password'=>'required',
+            'name' => 'required',
+            'password' => 'required',
         ]);
         //  method 1
-        
+
         // if(auth()->attempt($data)){
         //     $token=auth()->user()->createToken('Token')->accessToken;
         //     return response()->json(['token'=>$token,'user'=>$data->name],200);
         // }else{
         //     return response()->json(['error'=>'Unauthorized access..'],401);
         // }
-        
+
         // method 2
 
-        $search=User::where('name',$request->name)->where('password',$request->password)->first();
+        $search = User::where('name', $request->name)->where('password', $request->password)->first();
         if (!is_null($search)) {
-            $token=$search->createToken('Token')->accessToken;
-            return response()->json(['token'=>$token,'uid'=>$search->uid],200);
+            $token = $search->createToken('Token')->accessToken;
+            return response()->json(['token' => $token, 'uid' => $search->uid], 200);
         } else {
-            return response()->json(['error'=>'Unauthorized access..'],401);
+            return response()->json(['error' => 'Unauthorized access..'], 401);
         }
     }
 
@@ -57,19 +58,19 @@ class UserController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'name'=>'required|min:6|string',
-            'password'=>'required|min:8',
+            'name' => 'required|min:6|string',
+            'password' => 'required|min:8',
         ]);
         //searching user for unique
-        $search=User::where('name',$request->name)->get();
+        $search = User::where('name', $request->name)->get();
         if (count($search) == 0) {
-            $user= User::create([
-                'name'=>$request['name'],
-                'password'=>$request['password'],
+            $user = User::create([
+                'name' => $request['name'],
+                'password' => $request['password'],
             ]);
-            return response()->json(['sucess'=>'Registrtion Sucessfull..'],200);
+            return response()->json(['sucess' => 'Registrtion Sucessfull..'], 200);
         } else {
-            return response()->json(['warning'=>'Username is Already Present...'],201);
+            return response()->json(['warning' => 'Username is Already Present...'], 201);
         }
         return response()->json('request');
     }
@@ -88,8 +89,8 @@ class UserController extends Controller
         // } else {
         //     return response()->json('Invalid');
         // }
-        $user=auth()->user();
-        return response()->json(['user'=>$user, 200]);
+        $user = auth()->user();
+        return response()->json(['user' => $user, 200]);
     }
 
     /**

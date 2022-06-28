@@ -14,7 +14,7 @@ class CartController extends Controller
      */
     public function index(Request $request)
     {
-        $data=Cart::where('uid',$request->uid)->get();
+        $data = Cart::where('uid', $request->uid)->get();
         return response()->json($data);
     }
 
@@ -37,25 +37,25 @@ class CartController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'uid'=>'required',
-            'pid'=>'required',
-            'pname'=>'required',
-            'qty'=>'required|min:1|max:10',
-            'price'=>'required',
+            'uid' => 'required',
+            'pid' => 'required',
+            'pname' => 'required',
+            'qty' => 'required|min:1|max:10',
+            'price' => 'required',
         ]);
         //searching Cart for unique
-        $search=Cart::where('uid',$request->uid)->where('pid',$request->pid)->get();
+        $search = Cart::where('uid', $request->uid)->where('pid', $request->pid)->get();
         if (count($search) == 0) {
-            $Cart= Cart::create([
-                'uid'=>$request['uid'],
-                'pid'=>$request['pid'],
-                'pname'=>$request['pname'],
-                'qty'=>$request['qty'],
-                'price'=>$request['price'],
+            $Cart = Cart::create([
+                'uid' => $request['uid'],
+                'pid' => $request['pid'],
+                'pname' => $request['pname'],
+                'qty' => $request['qty'],
+                'price' => $request['price'],
             ]);
-            return response()->json(['sucess'=>'Product is added Sucessfull..'],200);
+            return response()->json(['sucess' => 'Product is added to cart Sucessfull..'], 200);
         } else {
-            return response()->json(['warning'=>'Product is Already added to cart...'],201);
+            return response()->json(['warning' => 'Product is Already added to cart...'], 201);
         }
         return response()->json('request');
     }

@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import Navbar from "../Header/Navbar";
 import { auth } from "../../APi/commonApi";
+import swal from "sweetalert";
 function AddProduct() {
-  const [msg, SetMsg] = useState("");
   const {
     register,
     handleSubmit,
@@ -25,35 +25,21 @@ function AddProduct() {
       .post("/storeProduct", data)
       .then((res) => {
         if (res.status === 200) {
-          SetMsg(res.data);
+          swal("Successs",res.data, "success");
           document.getElementById("form").reset();
         }
       })
       .catch((err) => {
         console.log(err);
-        SetMsg("something went wrong...");
+        swal("Error", "something went wrong...", "error");
         // localStorage.setItem("Token", null);
       });
-    setTimeout(() => {
-      SetMsg("");
-    }, 2000);
     return true;
   }
   return (
     <div className="container-fluid m-0 p-0">
       <Navbar />
       <div className="container-sm">
-        <input
-          type={msg ? "text" : "hidden"}
-          className={
-            msg.startsWith("Product")
-              ? "alert alert-primary m-1 p-1"
-              : "alert alert-danger m-1 p-1"
-          }
-          role="alert"
-          value={msg}
-          readOnly
-        />
         <form
           name="form"
           id="form"
