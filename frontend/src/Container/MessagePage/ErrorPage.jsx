@@ -5,7 +5,7 @@ function ErrorPage() {
     <div className="container-fluid m-0 p-0">
       <Navbar />
       <div className="container">
-        <div className="card">
+        <div className="card text-center">
           <div className="card-body">
             <h4 className="card-title">404</h4>
             <p className="card-text">Page Not Found..</p>
