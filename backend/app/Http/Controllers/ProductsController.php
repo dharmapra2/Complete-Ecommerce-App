@@ -58,13 +58,13 @@ class ProductsController extends Controller
         return response()->json('Product added Sucessfully..');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Products  $products
-     * @return \Illuminate\Http\Response
-     */
-     function prodDetails($id)
+    // /**
+    //  * Display the specified resource.
+    //  *
+    //  * @param  \App\Models\Products  $products
+    //  * @return \Illuminate\Http\Response
+    //  */
+    public function prodDetails($id)
     {
         // $data = Products::all();
         // if ($data) {
@@ -83,9 +83,12 @@ class ProductsController extends Controller
      */
     public function edit(Products $products)
     {
-        //
+        return response()->json('rgrrtg');
     }
-
+    public function show(Products $products)
+    {
+        return response()->json('rgrrtg');
+    }
     /**
      * Update the specified resource in storage.
      *
