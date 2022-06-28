@@ -3,29 +3,35 @@ import Navbar from "../Header/Navbar";
 // import { cart } from "../../APi/commonApi";
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 function Checkout() {
-  const [price, SetPrice] = useState(0);
+  const [temp, SetTemp] = useState({
+    price: 0,
+    pname: [],
+    uid: 0,
+  });
   useEffect(() => {
-    SetPrice(localStorage.getItem("price") || 0);
-  },[SetPrice]);
-  let prodList = ["shits", "camera"].join(" ");
+    SetTemp(JSON.parse(localStorage.getItem("temp")));
+  }, [SetTemp]);
+  // console.log(temp);
+  // const p=Object.entries(temp.pname)
+  let prodList = Object.values(temp.pname).join(", ");
   // console.log(prodList);
   const [paid, setPaid] = useState(false);
   const [error, setError] = useState("");
-  // console.log(totalPrice);
+  // console.log((temp.price / 78.28).toFixed(2));
   const handleApprove = (data) => {
     // here calling the backend function to fulfill the order
     // if response is success
-    let orderedData = {
-      name: Object.values(data.payer.name).join(" "),
-      email: data.payer.email_address,
-      orderId: data.id,
-      create_time: data.create_time,
-      purchase_units: data.purchase_units[0].amout.value,
-      orderedItems: data.purchase_units[0].description,
-    };
+    // let orderedData = {
+    //   name: Object.values(data.payer.name).join(" "),
+    //   email: data.payer.email_address,
+    //   orderId: data.id,
+    //   create_time: data.create_time,
+    //   purchase_units: data.purchase_units[0].amout.value,
+    //   orderedItems: data.purchase_units[0].description,
+    // };
     if (data.status === "COMPLETED") {
       setPaid(true);
-      console.log(orderedData);
+      // console.log(orderedData);
     } else {
       // if response is error
       setError("error");
@@ -77,9 +83,8 @@ function Checkout() {
                   purchase_units: [
                     {
                       description: prodList,
-                      amount: {
-                        value: "0.1",
-                      },
+                      // amount: (temp.price / 78.28).toFixed(2),
+                      amount: "0.1",
                     },
                   ],
                 });

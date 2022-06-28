@@ -9,7 +9,7 @@ import Home from "./Container/Home Page/Home";
 import AddProduct from "./Container/ProductsPage/AddProduct";
 import ProdDetails from "./Container/ProductsPage/ProdDetails";
 import Cart from "./Container/Cart/Cart";
-import Checkout from "./Container/Checkout/Checkout";
+import Checkout from "./Container/Checkout/Checkout1";
 import ErrorPage from "./Container/MessagePage/ErrorPage";
 function App() {
   return (
