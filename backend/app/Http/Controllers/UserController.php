@@ -32,7 +32,7 @@ class UserController extends Controller
         $search=User::where('name',$request->name)->where('password',$request->password)->first();
         if (!is_null($search)) {
             $token=$search->createToken('Token')->accessToken;
-            return response()->json(['token'=>$token],200);
+            return response()->json(['token'=>$token,'uid'=>$search->uid],200);
         } else {
             return response()->json(['error'=>'Unauthorized access..'],401);
         }

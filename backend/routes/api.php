@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductsController;
 /*
 |--------------------------------------------------------------------------
@@ -19,11 +20,13 @@ Route::post('login', [UserController::class, 'login']);
 Route::post('register', [UserController::class, 'register']);
 Route::post('storeProduct', [ProductsController::class, 'storeProduct']);
 Route::get('getProducts', [ProductsController::class, 'index']);
-// Route::get('hyy', [ProductsController::class, 'show']);
-// Route::get('/pro/{id}', [ProductsController::class, 'prodDetails']);
+Route::get('prodDetails/{id}', [ProductsController::class, 'prodDetails']);
+
 
 Route::middleware('auth:api')->group(function () {
     Route::get('show', [UserController::class, 'show']);
+    Route::post('addToCart', [CartController::class, 'store']);
+    Route::post('cartDetails', [CartController::class, 'index']);
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

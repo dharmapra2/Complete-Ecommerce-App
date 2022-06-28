@@ -66,13 +66,13 @@ class ProductsController extends Controller
     //  */
     public function prodDetails($id)
     {
-        // $data = Products::all();
-        // if ($data) {
-        //     return response()->json($data);
-        // } else {
-        //     return response()->json(['status' => 400, 'message' => 'No Product is avilable.']);
-        // }
-        return $id;
+        $data = Products::where('pid',$id)->first();
+        if ($data) {
+            return response()->json($data);
+        } else {
+            return response()->json(['status' => 404, 'message' => 'No Product is avilable.']);
+        }
+        // return $id;
     }
 
     /**

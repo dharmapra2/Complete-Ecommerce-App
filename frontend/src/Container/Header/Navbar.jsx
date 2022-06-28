@@ -5,14 +5,15 @@ import { NavLink, useNavigate } from "react-router-dom";
 function Navbar() {
   const navigate = useNavigate();
   useEffect(() => {
-    let token = localStorage.getItem("Token");
+    let token = localStorage.getItem("Data");
     // console.log(token);
     if (token === null) {
       navigate("/");
     }
   }, [navigate]);
   const logout = () => {
-    localStorage.removeItem("Token");
+    localStorage.removeItem("Data");
+    localStorage.removeItem("price");
     navigate("/");
   };
   return (
@@ -34,7 +35,7 @@ function Navbar() {
               </NavLink>
             </div>
             <div className="nav-item nav-link ">
-              <NavLink className="btn btn-sm btn-success" to="/cart">
+              <NavLink className="btn btn-sm" to="/cart">
                 Cart
                 <span role="img" aria-labelledby="none">
                   &#x1F6D2;

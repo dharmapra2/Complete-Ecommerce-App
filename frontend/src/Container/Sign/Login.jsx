@@ -6,7 +6,8 @@ import swal from "sweetalert";
 function Login() {
   const navigate = useNavigate();
   useEffect(() => {
-    let token = localStorage.getItem("Token");
+    let token = JSON.parse(localStorage.getItem("Data"));
+    // console.log(token);
     // console.log(token);
     if (token !== null) {
       navigate("/home");
@@ -30,16 +31,16 @@ function Login() {
         if (res.status === 200) {
           swal("", "Login Sucessfully...", "success");
           // swal('Sucess',"Login Sucessfully...");
-          localStorage.setItem("Token", JSON.stringify(res.data.token));
+          localStorage.setItem("Data", JSON.stringify(res.data));
           setTimeout(() => {
             window.location.replace("/home");
           }, 2000);
         }
       })
       .catch((err) => {
-        // console.log(err);
+        console.log(err);
         swal("Unauhorized", "Invalid username & password...", "error");
-        localStorage.removeItem("Token");
+        localStorage.removeItem("Data");
       });
     setTimeout(() => {
       document.getElementById("form").reset();
@@ -51,17 +52,6 @@ function Login() {
         <div className="modal-header">
           <h5 className="modal-title text-center">LogIn</h5>
         </div>
-        {/* <input
-          type={msg ? "text" : "hidden"}
-          className={
-            msg.startsWith("Login")
-              ? "alert alert-primary m-1 p-1"
-              : "alert alert-danger m-1 p-1"
-          }
-          role="alert"
-          value={msg}
-          readOnly
-        /> */}
         <div className="modal-body">
           <form name="form" id="form" onSubmit={(event) => FormData(event)}>
             <div className="mb-3">
