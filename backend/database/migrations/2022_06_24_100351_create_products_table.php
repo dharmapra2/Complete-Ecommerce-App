@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
             $table->string('category')->nullable();
             $table->string('price');
             $table->string('desc')->nullable();
+            $table->boolean('status')->nullable()->default(false);
             $table->timestamps();
         });
     }

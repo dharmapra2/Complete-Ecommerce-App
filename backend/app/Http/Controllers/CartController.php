@@ -45,6 +45,7 @@ class CartController extends Controller
         ]);
         //searching Cart for unique
         $search = Cart::where('uid', $request->uid)->where('pid', $request->pid)->get();
+        $search2 = Cart::where('uid', $request->uid)->where('pid', $request->pid)->get();
         if (count($search) == 0) {
             $Cart = Cart::create([
                 'uid' => $request['uid'],
@@ -54,6 +55,9 @@ class CartController extends Controller
                 'price' => $request['price'],
             ]);
             return response()->json(['sucess' => 'Product is added to cart Sucessfull..'], 200);
+        } else if (count($search2) == 1) {
+            $cart = Cart::where('uid', $request->uid)->where('pid', $request->pid)->update(['qty' => $request['qty']]);
+            return response()->json(['sucess' => 'Product is updated in cart Sucessfull..'], 200);
         } else {
             return response()->json(['warning' => 'Product is Already added to cart...'], 201);
         }
@@ -100,8 +104,13 @@ class CartController extends Controller
      * @param  \App\Models\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cart $cart)
+    public function destroy(Request $request)
     {
-        //
+        $delete = Cart::where('cartId', $request->cartId)->delete();
+        if ($delete) {
+            return response()->json(['message' => 'Product successfully removed from cart.'], 200);
+        } else {
+            return response()->json(['error' => 'Product can\'t be remove from cart.'], 401);;
+        }
     }
 }

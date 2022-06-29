@@ -21,7 +21,7 @@ function ProdDetails() {
   }, [id]);
   const addToCart = () => {
     const localData = JSON.parse(localStorage.getItem("Data"));
-    console.log(localData);
+    // console.log(localData);
     if (!localData) {
       swal("Warning", "Please Login to addCart...", "warning");
     }
@@ -32,7 +32,7 @@ function ProdDetails() {
       pname:prod.pname,
       qty: qty,
     };
-    console.log("add to cart");
+    // console.log("added to cart");
     const adding = async () => {
       await cart
         .post("/addToCart", data)

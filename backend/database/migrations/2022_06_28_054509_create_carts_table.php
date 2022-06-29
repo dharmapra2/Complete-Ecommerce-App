@@ -18,8 +18,9 @@ class CreateCartsTable extends Migration
             $table->foreignId('uid')->references('uid')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('pid')->references('pid')->on('products')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('qty');
-            $table->string('pname');
+            $table->string('pname')->nullable();
             $table->bigInteger('price');
+            $table->boolean('status')->nullable()->default(false);
             $table->timestamps();
         });
     }
